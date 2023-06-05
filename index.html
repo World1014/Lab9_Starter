@@ -87,6 +87,15 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "24fed6a037ef4619b84eda89e13a79a4"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -97,11 +106,113 @@
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
-
+    let cCount = 0;
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
-
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns.forEach((item) => {
+      let inStr = item.innerHTML;
+      if(inStr.includes("Console Log")){
+        item.addEventListener('click', e => {
+          console.log("Console Log Demo");
+        });
+      }
+      else if(inStr.includes("Console Error")){
+        item.addEventListener('click', e => {
+          console.error("Console Error Demo");
+        });
+      }
+      else if(inStr.includes("Console Count")){
+        item.addEventListener('click', e => {
+          cCount = cCount + 1;
+          console.log("Count Button: " + cCount);
+        });
+      }
+      else if(inStr.includes("Console Warn")){
+        item.addEventListener('click', e => {
+          console.warn("Console Warn Demo");
+        });
+      }
+      else if(inStr.includes("Console Assert")){
+        item.addEventListener('click', e => {
+          const errorMsg = "The number does not equal 3";
+          const number = 2;
+          console.assert(number == 3, {number, errorMsg});
+        });
+      }
+      else if(inStr.includes("Console Clear")){
+        item.addEventListener('click', e => {
+          console.clear();
+        });
+      }
+      else if(inStr.includes("Console Dir")){
+        item.addEventListener('click', e => {
+          console.dir(item);
+        });
+      }
+      else if(inStr.includes("Console dirxml")){
+        item.addEventListener('click', e => {
+          console.dirxml(item);
+        });
+      }
+      else if(inStr.includes("Console Group Start")){
+        item.addEventListener('click', e => {
+          console.group("console.group");
+        });
+      }
+      else if(inStr.includes("Console Group End")){
+        item.addEventListener('click', e => {
+          console.groupEnd();
+        });
+      }
+      else if(inStr.includes("Console Table")){
+        item.addEventListener('click', e => {
+          function classes(name, num){
+            this.name = name;
+            this.num = num;
+          }
+          const SWE = new classes("Software Engineering", "110");
+          const PL = new classes("Programming Languages", "130");
+          const ASWE = new classes("Advanced Software Engineering", "112");
+          console.table([SWE, PL, ASWE]);
+        });
+      }
+      else if(inStr.includes("Start Timer")){
+        item.addEventListener('click', e => {
+          console.time("Timer Button");
+        });
+      }
+      else if(inStr.includes("End Timer")){
+        item.addEventListener('click', e => {
+          console.timeEnd("Timer Button");
+        });
+      }
+      else if(inStr.includes("Console Trace")){
+        item.addEventListener('click', e => {
+          function trace(item){
+            console.trace(item);
+          }
+          trace(item);
+        });
+      }
+      else if(inStr.includes("Trigger a Global Error")){
+        item.addEventListener('click', e => {
+          try{
+            console.log(yes);
+          } catch (e) {
+            if(e instanceof ReferenceError) {
+              console.log(e);
+              console.log("we have a reference error!, undefined value in this case!");
+            }
+          } finally {
+            console.log("oh no! An error! Good thing we have information on it!");
+          }
+          console.log("An error has occured!")
+          TrackJS.track('Testing TrackJS!');
+          console.log(boom);
+        });
+      }
+    });
   </script>
 </body>
 
